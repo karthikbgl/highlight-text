@@ -1,6 +1,6 @@
 This is a jQuery plugin which highlights the occurances of a text in the given web page.
 
-It does not match the node names (<script>, <textarea>, etc) but does match the same if found in the text. 
+It does not match the node names (`<script>`, `<textarea>`, etc) but does match the same if found in the text. 
 
 Example usage: 
 
