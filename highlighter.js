@@ -1,0 +1,29 @@
+jQuery.fn.highlight = function(str, className) {
+  function innerHighlight(node, str) {
+    var skip = 0;
+    if (node.nodeType == 3) {
+      var pos = node.data.toUpperCase().indexOf(str);
+      if (pos >= 0) {
+        var spannode = document.createElement('span');
+        spannode.className = className || 'highlight-class';
+        var middlebit = node.splitText(pos);
+        var endbit = middlebit.splitText(str.length);
+        var middleclone = middlebit.cloneNode(true);
+        spannode.appendChild(middleclone);
+        middlebit.parentNode.replaceChild(spannode, middlebit);
+        skip = 1;
+      }
+    }
+    else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+      for (var i = 0; i < node.childNodes.length; ++i) {
+        i += innerHighlight(node.childNodes[i], str);
+      }
+    }
+    return skip;
+  }
+
+  return this.each(function() {
+    innerHighlight(this, str.toUpperCase());
+  });
+}
+
